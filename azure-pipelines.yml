@@ -11,10 +11,9 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  RestoreBuildProjects:
-   - "**/*.csproj"
-  #  - "BookmarkApp/*.csproj"
-   - "!*Tests/*.csproj"
+  RestoreBuildProjects: |
+   **/*.csproj
+   !*Tests/*.csproj
 
 steps:
 # - script: dotnet build --configuration $(buildConfiguration)
