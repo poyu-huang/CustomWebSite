@@ -9,27 +9,35 @@ trigger:
 pool:
   vmImage: windows-latest
 
-parameters:
-  - name: buildConfiguration
-    type: string
-    default: Release
-  - name: RestoreBuildProjects
-    type: string
-    values:
-    - '**/*.csproj'
-    - '!*Tests/*.csproj'
+# parameters:
+#   - name: buildConfiguration
+#     type: string
+#     default: Release
+#   - name: RestoreBuildProjects
+#     type: string
+#     values:
+#     - '**/*.csproj'
+#     - '!*Tests/*.csproj'
+
+variables:
+  buildConfiguration: 'Release'
 
 steps:
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
     command: restore
-    projects: '$(Parameters.RestoreBuildProjects)'
+    # projects: '$(Parameters.RestoreBuildProjects)'
+    projects: |
+      **/*.csproj
+      !*Tests/*.csproj
 
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    projects: '$(Parameters.RestoreBuildProjects)'
+    projects: |
+      **/*.csproj
+      !*Tests/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
@@ -37,7 +45,9 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    projects: '$(Parameters.RestoreBuildProjects)'
+    projects: |
+      **/*.csproj
+      !*Tests/*.csproj
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
     zipAfterPublish: True
 
