@@ -40,7 +40,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- checkout: MyGitHubRepo
+# - checkout: MyGitHubRepo
 
 - task: DotNetCoreCLI@2
   displayName: Restore
