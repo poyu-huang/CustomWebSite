@@ -9,10 +9,22 @@ trigger:
 pool:
   vmImage: windows-latest
 
+resources:
+  repositories:
+  - repository: MyGitHubRepo1 # The name used to reference this repository in the checkout step
+    type: github
+    endpoint: GitHub connection 1
+    name: poyu-huang/CustomWebSite/CashApp
+    trigger:
+    - master
+  - repository: MyGitHubRepo2 # The name used to reference this repository in the checkout step
+    type: github
+    endpoint: GitHub connection 1
+    name: poyu-huang/CustomWebSite/BookmarkApp
+    trigger:
+    - master
+
 # parameters:
-#   - name: buildConfiguration
-#     type: string
-#     default: Release
 #   - name: RestoreBuildProjects
 #     type: string
 #     values:
