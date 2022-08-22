@@ -4,20 +4,30 @@
 pool:
   vmImage: windows-latest
 
-resources:
-  repositories:
-  - repository: MyGitHubRepo1 # The name used to reference this repository in the checkout step
-    type: github
-    endpoint: github.com_poyu-huang
-    name: poyu-huang/CustomWebSite/CashApp
-    trigger:
+# resources:
+#   repositories:
+#   - repository: MyGitHubRepo1 # The name used to reference this repository in the checkout step
+#     type: github
+#     endpoint: github.com_poyu-huang
+#     name: poyu-huang/CustomWebSite
+#     trigger:
+#     - master
+  # - repository: MyGitHubRepo2 # The name used to reference this repository in the checkout step
+  #   type: github
+  #   endpoint: github.com_poyu-huang
+  #   name: poyu-huang/CustomWebSite/BookmarkApp
+  #   trigger:
+  #   - master
+
+trigger:
+  # batch: true
+  branches:
+    include:
     - master
-  - repository: MyGitHubRepo2 # The name used to reference this repository in the checkout step
-    type: github
-    endpoint: github.com_poyu-huang
-    name: poyu-huang/CustomWebSite/BookmarkApp
-    trigger:
-    - master
+  paths:
+    include:
+      - CashApp
+      - BookmarkApp
 
 # parameters:
 #   - name: RestoreBuildProjects
@@ -30,6 +40,8 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- checkout: MyGitHubRepo
+
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
