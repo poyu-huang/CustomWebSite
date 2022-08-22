@@ -9,8 +9,12 @@ trigger:
 pool:
   vmImage: windows-latest
 
-# variables:
-#   buildConfiguration: 'Release'
+variables:
+  buildConfiguration: 'Release'
+  RestoreBuildProjects:
+   - "**/*.csproj"
+  #  - "BookmarkApp/*.csproj"
+   - "!*Tests/*.csproj"
 
 steps:
 # - script: dotnet build --configuration $(buildConfiguration)
