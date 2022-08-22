@@ -4,14 +4,14 @@
 pool:
   vmImage: windows-latest
 
-# resources:
-#   repositories:
-#   - repository: MyGitHubRepo1 # The name used to reference this repository in the checkout step
-#     type: github
-#     endpoint: github.com_poyu-huang
-#     name: poyu-huang/CustomWebSite
-#     trigger:
-#     - master
+resources:
+  repositories:
+  - repository: MyGitHubRepo1 # The name used to reference this repository in the checkout step
+    type: github
+    endpoint: github.com_poyu-huang
+    name: poyu-huang/CustomWebSite
+    trigger:
+    - master
   # - repository: MyGitHubRepo2 # The name used to reference this repository in the checkout step
   #   type: github
   #   endpoint: github.com_poyu-huang
@@ -19,15 +19,15 @@ pool:
   #   trigger:
   #   - master
 
-trigger:
-  # batch: true
-  branches:
-    include:
-    - master
-  paths:
-    include:
-      - CashApp
-      - BookmarkApp
+# trigger:
+#   # batch: true
+#   branches:
+#     include:
+#     - master
+#   paths:
+#     include:
+#       - CashApp
+#       - BookmarkApp
 
 # parameters:
 #   - name: RestoreBuildProjects
