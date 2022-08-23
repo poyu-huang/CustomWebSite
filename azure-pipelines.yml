@@ -4,14 +4,14 @@
 pool:
   vmImage: windows-latest
 
-resources:
-  repositories:
-  - repository: MyGitHubRepo1 # The name used to reference this repository in the checkout step
-    type: github
-    endpoint: github.com_poyu-huang
-    name: poyu-huang/CustomWebSite
-    trigger:
-    - master
+# resources:
+#   repositories:
+#   - repository: MyGitHubRepo1 # The name used to reference this repository in the checkout step
+#     type: github
+#     endpoint: github.com_poyu-huang
+#     name: poyu-huang/CustomWebSite
+#     trigger:
+#     - master
   # - repository: MyGitHubRepo2 # The name used to reference this repository in the checkout step
   #   type: github
   #   endpoint: github.com_poyu-huang
@@ -38,9 +38,24 @@ resources:
 
 variables:
   buildConfiguration: 'Release'
+  folders: 'BookmarkApp CashApp CashAppTests'
 
 steps:
 # - checkout: MyGitHubRepo
+- checkout: none
+- script: |
+    git init
+    git sparse-checkout init --cone
+    git sparse-checkout add $(folders)
+    git remote add origin $(Build.Repository.Uri)
+    git config core.sparsecheckout true
+    git config gc.auto 0
+    git config --get-all http.$(Build.Repository.Uri).extraheader
+    git config --get-all http.proxy
+    git config http.version HTTP/1.1
+    git fetch --force --tags --prune --prune-tags --progress --no-recurse-submodules --verbose --depth=1 origin
+    git checkout --progress $(Build.SourceBranchName)
+  displayName: 'Clone Partial git repo'
 
 - task: DotNetCoreCLI@2
   displayName: Restore
